@@ -15,6 +15,8 @@
 #include <ranges>
 #include <chrono>
 #include <any>
+#include <fstream>
+#include <iomanip>
 
 #include <cassert>
 #include <cctype>
@@ -28,12 +30,16 @@ using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
 using StrSizeType = std::string::size_type;
 using PathType = std::filesystem::path;
 
-namespace
+namespace // constants
 {
-    static constexpr char allChars[]{ '0','1','2','3','4','5','6','7', '8','9',
+    inline static constexpr char allChars[]{ '0','1','2','3','4','5','6','7', '8','9',
     'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
     'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z' };
 
+    template<typename T> inline static constexpr T BYTE     = static_cast<T>(1);
+    template<typename T> inline static constexpr T KILOBYTE = static_cast<T>(1024);
+    template<typename T> inline static constexpr T MEGABYTE = static_cast<T>(1024 * 1024);
+    template<typename T> inline static constexpr T GIGABYTE = static_cast<T>(1024 * 1024 * 1024);
 }
 
 namespace DTSS::Utility
@@ -45,7 +51,6 @@ namespace DTSS::Utility
 #   define Assert(Expr, Msg) ;
 #endif
     void __M_Assert(const char* expr_str, bool expr, const char* file, int line, const char* msg);
-
 
     template<typename TimeType>
     constexpr auto toSysTime(TimeType&& time) noexcept
@@ -92,6 +97,13 @@ namespace DTSS::Utility
 
         return name;
     }
+
+    template<typename T> struct Convert final
+    {
+        inline static constexpr T B2Kb(T bytes) noexcept { return bytes / KILOBYTE<T>; }
+        inline static constexpr T B2Mb(T bytes) noexcept { return bytes / MEGABYTE<T>; }
+    };
 }
 
 #endif // UTILITY_HPP
+
