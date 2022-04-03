@@ -1,10 +1,6 @@
 #include "FileDetector.hpp"
 
-#include <iostream>
-#include <chrono>
 #include <thread>
-
-using namespace std::chrono_literals;
 
 int main(int argc, char* argv[])
 {
