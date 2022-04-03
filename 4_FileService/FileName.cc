@@ -1,8 +1,9 @@
 #include "FileName.hpp"
 #include "Utility.hpp"
 
+namespace DFS = DTSS::FileService;
 
-FileName::FileName(std::filesystem::directory_entry dir
+DFS::FileName::FileName(std::filesystem::directory_entry dir
     , std::string startStr, std::string endStr
 )
     : mPath{ std::move(dir) }
@@ -10,7 +11,7 @@ FileName::FileName(std::filesystem::directory_entry dir
     , mEndsWith{ std::move(endStr) }
 {}
 
-bool FileName::isCreatedWithIn(std::chrono::duration<double> const& duration) const noexcept
+bool DFS::FileName::isCreatedWithIn(std::chrono::duration<double> const& duration) const noexcept
 {
     using namespace DTSS::Utility;
     // current time.
@@ -57,7 +58,7 @@ bool FileName::isCreatedWithIn(std::chrono::duration<double> const& duration) co
     return hrs <= hrsCheck;
 }
 
-bool FileName::isGoodFile() const
+bool DFS::FileName::isGoodFile() const
 {
     if (!mPath.is_regular_file())
         return false;
@@ -67,7 +68,7 @@ bool FileName::isGoodFile() const
     return fileNameStr.starts_with(mStartWith) || fileNameStr.ends_with(mEndsWith) || hasHexadecimal(fileNameStr);
 }
 
-bool FileName::hasHexadecimal(const std::string& str) const
+bool DFS::FileName::hasHexadecimal(const std::string& str) const
 {
     static const auto is_hex_digit = [](unsigned char c) { return std::isxdigit(c); };
 

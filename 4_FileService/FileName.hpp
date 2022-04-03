@@ -3,6 +3,8 @@
 
 #include "Utility.hpp"
 
+namespace DTSS::FileService {
+
 class FileName
 {
     using PathType = std::filesystem::path;
@@ -34,5 +36,7 @@ private:
     std::string mEndsWith{};
 };
 
+} // DTSS::FileService
 
 #endif // FILE_NAME_HPP
+

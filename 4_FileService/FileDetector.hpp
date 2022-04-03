@@ -3,6 +3,8 @@
 
 #include "Utility.hpp"
 
+namespace DTSS::FileService {
+
 class FileDetector // Subject
 {
 public:
@@ -28,5 +30,7 @@ FileDetector::FileDetector(std::vector<PathType> const& exts, Args&&... paths)
     (mFilePaths.emplace_back(std::forward<Args>(paths)), ...);
 }
 
+} // DTSS::FileService
 
 #endif // #define FILE_DETECTOR_HPP
+

@@ -3,6 +3,8 @@
 
 #include "EventObserver.hpp"
 
+namespace DTSS::FileService {
+
 class OutputMgr : public EventObserver
 {
 public:
@@ -15,5 +17,7 @@ protected:
     void de_registerSelf() override;
 };
 
+} // DTSS::FileService
 
 #endif // OUTPUT_MGR_HPP
+

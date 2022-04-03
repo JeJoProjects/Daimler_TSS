@@ -47,9 +47,9 @@ int main(int argc, char* argv[])
 
 
             auto& eventMgr = EventMgr::GetInstance();
-            OutputMgr outMgr{};
+            DTSS::FileService::OutputMgr outMgr{};
 
-            FileDetector fileDetector{ exts, directory };
+            DTSS::FileService::FileDetector fileDetector{ exts, directory };
             const auto duration = 10min;
             while (true)
             {

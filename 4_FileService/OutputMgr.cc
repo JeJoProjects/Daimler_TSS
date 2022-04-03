@@ -2,6 +2,8 @@
 #include "EventMgr.hpp"
 #include "Utility.hpp"
 
+namespace DFS = DTSS::FileService;
+
 void print_space_info(std::fstream& outFile, auto const& dir, int width = 14)
 {
     using namespace DTSS::Utility;
@@ -20,7 +22,7 @@ void print_space_info(std::fstream& outFile, auto const& dir, int width = 14)
 
 }
 
-auto creatFile(const FileName& file)
+auto creatFile(const DFS::FileName& file)
 {
     std::filesystem::path path{ "D:\\C++\\00_GitHub\\Daimler_TSS\\Build_and_Out" };
     const auto folderName = file.fileName().string() + DTSS::Utility::generateRandomName();
@@ -42,18 +44,18 @@ auto creatFile(const FileName& file)
 }
 
 
-OutputMgr::OutputMgr()
+DFS::OutputMgr::OutputMgr()
     : EventObserver{}
 {
     registerSelf();
 }
 
-OutputMgr::~OutputMgr()
+DFS::OutputMgr::~OutputMgr()
 {
     de_registerSelf();
 }
 
-void OutputMgr::handleEvent(const EventType type, const std::any& para)
+void DFS::OutputMgr::handleEvent(const EventType type, const std::any& para)
 {
     std::cout << "OutputMgr::update() --> \n";
     switch (type)
@@ -84,12 +86,12 @@ void OutputMgr::handleEvent(const EventType type, const std::any& para)
     }
 }
 
-void OutputMgr::registerSelf()
+void DFS::OutputMgr::registerSelf()
 {
     EventMgr::GetInstance()->attach(EventType::NEW_FILE, this);
 }
 
-void OutputMgr::de_registerSelf()
+void DFS::OutputMgr::de_registerSelf()
 {
     EventMgr::GetInstance()->detach(EventType::NEW_FILE, this);
 }

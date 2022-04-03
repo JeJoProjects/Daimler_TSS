@@ -2,8 +2,9 @@
 #include "EventMgr.hpp"
 #include "FileName.hpp"
 
+namespace DFS = DTSS::FileService;
 
-void FileDetector::detectFile(std::chrono::duration<double> const& duration)
+void DFS::FileDetector::detectFile(std::chrono::duration<double> const& duration)
 {
 
     for(const auto& currPath: mFilePaths)
@@ -32,7 +33,7 @@ void FileDetector::detectFile(std::chrono::duration<double> const& duration)
     }
 }
 
-bool FileDetector::check(const PathType& ext)
+bool DFS::FileDetector::check(const PathType& ext)
 {
     if (mExtensions.empty()) // check all type of files
         return true;
