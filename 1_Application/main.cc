@@ -1,6 +1,6 @@
-#include "Utility.hpp"
-#include "FileDetector.hpp"
+#include "CmdLine.hpp"
 #include "EventMgr.hpp"
+#include "FileDetector.hpp"
 #include "OutputMgr.hpp"
 
 #include <thread> // sleep_for, sleep_until
@@ -8,6 +8,27 @@
 
 int main(int argc, char* argv[])
 {
+    using namespace DTSS;
+
+    CmdLine::CreateInstance( argc, argv );
+    const auto& cmdLine = CmdLine::GetInstance();
+
+    auto& eventMgr = Event::EventMgr::GetInstance();
+    FileService::OutputMgr outMgr{};
+
+    FileService::FileDetector fileDetector{ 
+        cmdLine->getOptionValues("-Path"sv),
+        cmdLine->getOptionValues("-Ext"sv),
+    };
+
+    const auto duration = 10min;
+    while (true)
+    {
+        fileDetector.detectFile(duration);
+        std::this_thread::sleep_for(duration);
+    }
+
+#if 0
     if (argc <= 1)
     {
         std::cout << "\nNot enough command line arguments has been passed.\n"
@@ -59,6 +80,7 @@ int main(int argc, char* argv[])
 
         }
     }
+#endif
 
     return 1;
 }

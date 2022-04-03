@@ -8,11 +8,11 @@ namespace DTSS::FileService {
 class FileDetector // Subject
 {
 public:
-    template<typename... Paths>
-    explicit FileDetector(std::vector<PathType> const& exts, Paths&&... paths);
+    explicit FileDetector(
+        std::vector<std::string> const& paths, std::vector<std::string> const& exts);
 
     void detectFile(std::chrono::duration<double> const& duration);
-    bool check(const PathType& ext);
+    bool check(const PathType& ext) const noexcept;
 
 private:
     std::vector<PathType> mFilePaths{};
@@ -21,14 +21,6 @@ private:
 
 };
 
-template<typename... Args>
-FileDetector::FileDetector(std::vector<PathType> const& exts, Args&&... paths)
-    : mExtensions{ exts }
-{
-    static_assert((std::is_constructible_v<PathType, Args> && ...));
-    mFilePaths.reserve(sizeof...(Args));
-    (mFilePaths.emplace_back(std::forward<Args>(paths)), ...);
-}
 
 } // DTSS::FileService
 

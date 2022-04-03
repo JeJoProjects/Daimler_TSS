@@ -5,9 +5,20 @@
 namespace DFS = DTSS::FileService;
 namespace DE = DTSS::Event;
 
+DFS::FileDetector::FileDetector(
+    std::vector<std::string> const& paths, std::vector<std::string> const& exts)
+{
+    mFilePaths.reserve(paths.size());
+    for (const auto& strPath : paths)
+        mFilePaths.emplace_back(strPath);
+
+    mExtensions.reserve(exts.size());
+    for (const auto& strPath : exts)
+        mExtensions.emplace_back(strPath);
+}
+
 void DFS::FileDetector::detectFile(std::chrono::duration<double> const& duration)
 {
-
     for(const auto& currPath: mFilePaths)
     {
         for (auto dirEntry : std::filesystem::recursive_directory_iterator(currPath))
@@ -34,7 +45,7 @@ void DFS::FileDetector::detectFile(std::chrono::duration<double> const& duration
     }
 }
 
-bool DFS::FileDetector::check(const PathType& ext)
+bool DFS::FileDetector::check(const PathType& ext) const noexcept
 {
     if (mExtensions.empty()) // check all type of files
         return true;

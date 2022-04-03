@@ -9,8 +9,10 @@
 #include <iterator>
 #include <utility>
 #include <vector>
+#include <array>
 #include <string>
 #include <unordered_map>
+#include <map>
 #include <random>
 #include <ranges>
 #include <chrono>
