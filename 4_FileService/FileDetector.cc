@@ -24,7 +24,7 @@ void DFS::FileDetector::detectFile(std::chrono::duration<double> const& duration
         for (auto dirEntry : std::filesystem::recursive_directory_iterator(currPath))
         {
             if (std::filesystem::is_regular_file(dirEntry)
-                && check(dirEntry.path().extension()))
+                && hasAllowedExtension(dirEntry.path().extension()))
             {
                 FileName fileObj{ std::move(dirEntry) };
                 std::cout << "File : " << fileObj.fileName().string() << "\n\n";
@@ -45,7 +45,7 @@ void DFS::FileDetector::detectFile(std::chrono::duration<double> const& duration
     }
 }
 
-bool DFS::FileDetector::check(const PathType& ext) const noexcept
+bool DFS::FileDetector::hasAllowedExtension(const PathType& ext) const noexcept
 {
     if (mExtensions.empty()) // check all type of files
         return true;

@@ -49,14 +49,19 @@ DTSS::CmdLine::CmdLine(const int argc, CharPtr* argv) noexcept
 const std::vector<std::string>& DTSS::CmdLine::getOptionValues(
     std::string_view option) const noexcept
 {
-    if (const auto iter = mCmdArgumentMap.find(option);
-        iter != std::cend(mCmdArgumentMap))
+    if (const auto iter = mCmdOptionArgMap.find(option);
+        iter != std::cend(mCmdOptionArgMap))
     {
         return iter->second;
     }
     
     static const std::vector<std::string> dummy;
     return dummy;
+}
+
+std::size_t DTSS::CmdLine::optionsRecived() const noexcept
+{
+    return mCmdOptionArgMap.size();
 }
 
 constexpr bool DTSS::CmdLine::isValidOption(std::string_view option) const noexcept
@@ -88,7 +93,7 @@ void DTSS::CmdLine::parseArguments(const int argc, CharPtr* const argv)
             }
 
             // add cmd option entry with values.
-            mCmdArgumentMap.emplace(std::move(currArg), std::move(values));
+            mCmdOptionArgMap.emplace(std::move(currArg), std::move(values));
         }
         else
         {
@@ -106,7 +111,7 @@ void DTSS::CmdLine::parseArguments(const int argc, CharPtr* const argv)
     }
 
     // DEBUG: print commands revived
-    for (const auto& [option, values] : mCmdArgumentMap)
+    for (const auto& [option, values] : mCmdOptionArgMap)
     {
         std::cout << option << " : ";
         for (const auto& val : values) std::cout << val << " ";

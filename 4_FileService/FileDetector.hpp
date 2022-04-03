@@ -12,7 +12,7 @@ public:
         std::vector<std::string> const& paths, std::vector<std::string> const& exts);
 
     void detectFile(std::chrono::duration<double> const& duration);
-    bool check(const PathType& ext) const noexcept;
+    bool hasAllowedExtension(const PathType& ext) const noexcept;
 
 private:
     std::vector<PathType> mFilePaths{};

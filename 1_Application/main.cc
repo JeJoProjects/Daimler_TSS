@@ -5,6 +5,7 @@
 
 #include <thread> // sleep_for, sleep_until
 
+#define DEBUG false
 
 int main(int argc, char* argv[])
 {
@@ -16,72 +17,34 @@ int main(int argc, char* argv[])
     auto& eventMgr = Event::EventMgr::GetInstance();
     FileService::OutputMgr outMgr{};
 
-    FileService::FileDetector fileDetector{ 
-        cmdLine->getOptionValues("-Path"sv),
-        cmdLine->getOptionValues("-Ext"sv),
-    };
-
-    const auto duration = 10min;
-    while (true)
+    if (DEBUG)
     {
-        fileDetector.detectFile(duration);
-        std::this_thread::sleep_for(duration);
-    }
+        FileService::FileDetector fileDetector{
+            cmdLine->getOptionValues("-Path"sv),
+            cmdLine->getOptionValues("-Ext"sv),
+        };
 
-#if 0
-    if (argc <= 1)
-    {
-        std::cout << "\nNot enough command line arguments has been passed.\n"
-            << "Please add arguments as: Application.exe -path \"<directory-path>\" -ext \"<extension>\"\n\n";
-        //return 0;
-    }
-    //else 
-    {
-        std::string directory{ "D:\\C++\\00_GitHub\\Daimler_TSS\\Build_and_Out\\Test" };
-        std::string extension{};
-
-        for (int index{ 0 }; index < argc; ++index)
+        const auto duration = 10min;
+        while (true)
         {
-            if (std::string{ argv[index] } == "-path"s)
-            {
-                // get the path
-                ++index;
-                directory = std::string{ argv[index] };
-            }
-            else if (std::string{ argv[index] } == "-ext"s)
-            {
-                // get the user provided extension
-                ++index;
-                extension = std::string{ argv[index] };
-            }
-
-            std::cout << "Args[" << index << "] :" << argv[index] << "\n";
-        }
-
-        // validate the user input!
-        if (!directory.empty())
-        {
-
-            std::vector<std::filesystem::path> exts;
-            if (!extension.empty())
-                exts.emplace_back(extension);
-
-
-            auto& eventMgr = DTSS::Event::EventMgr::GetInstance();
-            DTSS::FileService::OutputMgr outMgr{};
-
-            DTSS::FileService::FileDetector fileDetector{ exts, directory };
-            const auto duration = 10min;
-            while (true)
-            {
-                fileDetector.detectFile(duration);
-                std::this_thread::sleep_for(duration);
-            }
-
+            fileDetector.detectFile(duration);
+            std::this_thread::sleep_for(duration);
         }
     }
-#endif
+    else
+    {   
+        FileService::FileDetector fileDetector{
+            { { "D:\\C++\\00_GitHub\\Daimler_TSS\\Build_and_Out\\Test" } },
+            cmdLine->getOptionValues("-Ext"sv),
+        };
 
-    return 1;
+        const auto duration = 10min;
+        while (true)
+        {
+            fileDetector.detectFile(duration);
+            std::this_thread::sleep_for(duration);
+        }
+    }
+    return 0;
 }
 

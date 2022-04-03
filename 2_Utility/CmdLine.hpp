@@ -23,6 +23,9 @@ public:
 
     const std::vector<std::string>& getOptionValues(std::string_view option) const noexcept;
 
+    std::size_t optionsRecived() const noexcept;
+
+
     constexpr bool isValidOption(std::string_view option) const noexcept;
 
 private:
@@ -34,7 +37,7 @@ private:
 
 private:
     inline static std::unique_ptr<CmdLine> instance{ nullptr };
-    std::unordered_map<std::string_view, std::vector<std::string>> mCmdArgumentMap;
+    std::unordered_map<std::string_view, std::vector<std::string>> mCmdOptionArgMap;
 };
 
 }// DTSS
