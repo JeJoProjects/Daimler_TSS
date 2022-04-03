@@ -2,7 +2,9 @@
 #include "Utility.hpp"
 
 
-FileName::FileName(std::filesystem::directory_entry dir, std::string startStr, std::string endStr)
+FileName::FileName(std::filesystem::directory_entry dir
+    , std::string startStr, std::string endStr
+)
     : mPath{ std::move(dir) }
     , mStartWith { std::move(startStr) }
     , mEndsWith{ std::move(endStr) }
@@ -29,10 +31,30 @@ bool FileName::isCreatedWithIn(std::chrono::duration<double> const& duration) co
         ":" << secs <<
         "." << ms << " after the file creation!\n\n\n";
 
-    const auto [hrsCheck, minsCheck, secsCheck, msCheck] = timeTo_h_min_sec_ms(
-        duration
-    );
-    return hrs <= hrsCheck && mins <= minsCheck && secs <= secsCheck && ms <= msCheck;
+    const auto [hrsCheck, minsCheck, secsCheck, msCheck] = timeTo_h_min_sec_ms(duration);
+
+
+    if (hrsCheck == 0h) [[likely]]
+    {
+        if (minsCheck == 0min) [[likely]]
+        {
+            if (secsCheck == 0s) [[unlikely]]
+            {
+                // @TODO: Do we need ms check ??
+                std::cout << "Unknown scenario!\n";
+            }
+            else [[likely]]
+            {
+                return secs <= secsCheck;
+            }
+        }
+        else [[unlikely]]
+        {
+            return mins <= minsCheck;
+        }
+    }
+
+    return hrs <= hrsCheck;
 }
 
 bool FileName::isGoodFile() const
