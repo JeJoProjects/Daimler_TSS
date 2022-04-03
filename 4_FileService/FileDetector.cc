@@ -1,4 +1,5 @@
 #include "FileDetector.hpp"
+#include "EventMgr.hpp"
 #include "FileName.hpp"
 
 
@@ -21,6 +22,7 @@ void FileDetector::detectFile(std::chrono::duration<double> const& duration)
                         << " | File: " << fileObj.fileName().string()
                         << " | ext: " << fileObj.ext().string() << "\n";
 #endif
+                    EventMgr::GetInstance()->notify(EventType::NEW_FILE, std::make_any<FileName>(fileObj));
                    
 
                 }               
