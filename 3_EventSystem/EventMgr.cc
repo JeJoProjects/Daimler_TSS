@@ -1,24 +1,25 @@
 #include "EventMgr.hpp"
 #include "EventObserver.hpp"
 
+namespace DE = DTSS::Event;
 
-std::unique_ptr<EventMgr>& EventMgr::GetInstance()
+std::unique_ptr<DE::EventMgr>& DE::EventMgr::GetInstance()
 {
     if (!instance)
     {
         std::cout << "Creating EventMgr singleton instance.\n";
-        instance.reset(new EventMgr{});
+        instance.reset(new DE::EventMgr{});
     }
     DTSS::Utility::Assert(instance != nullptr, "Singleton instance is nullptr!");
     return instance;
 }
 
-void EventMgr::attach(const EventType eType, EventObserver* addObsvr)
+void DE::EventMgr::attach(const EventType eType, EventObserver* addObsvr)
 {
     mEventObserverMap.emplace(eType, addObsvr);
 }
 
-void EventMgr::detach(const EventType eType, EventObserver* removeObs)
+void DE::EventMgr::detach(const EventType eType, EventObserver* removeObs)
 {
     const auto erased = std::erase_if(mEventObserverMap,
         [eType, removeObs](const auto& entry) noexcept {
@@ -29,7 +30,7 @@ void EventMgr::detach(const EventType eType, EventObserver* removeObs)
     std::cout << "Total of " << erased << " Observers were erased.\n";
 }
 
-void EventMgr::notify(const EventType eType, const std::any& para)
+void DE::EventMgr::notify(const EventType eType, const std::any& para)
 {
     auto range = mEventObserverMap.equal_range(eType);
     for (auto it = range.first; it != range.second; ++it)

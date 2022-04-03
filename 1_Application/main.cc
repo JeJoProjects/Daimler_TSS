@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
                 exts.emplace_back(extension);
 
 
-            auto& eventMgr = EventMgr::GetInstance();
+            auto& eventMgr = DTSS::Event::EventMgr::GetInstance();
             DTSS::FileService::OutputMgr outMgr{};
 
             DTSS::FileService::FileDetector fileDetector{ exts, directory };

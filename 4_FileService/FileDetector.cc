@@ -3,6 +3,7 @@
 #include "FileName.hpp"
 
 namespace DFS = DTSS::FileService;
+namespace DE = DTSS::Event;
 
 void DFS::FileDetector::detectFile(std::chrono::duration<double> const& duration)
 {
@@ -23,9 +24,9 @@ void DFS::FileDetector::detectFile(std::chrono::duration<double> const& duration
                         << " | File: " << fileObj.fileName().string()
                         << " | ext: " << fileObj.ext().string() << "\n";
 #endif
-                    EventMgr::GetInstance()->notify(EventType::NEW_FILE, std::make_any<FileName>(fileObj));
-                   
-
+                    DE::EventMgr::GetInstance()->notify(
+                        DE::EventType::NEW_FILE, std::make_any<FileName>(fileObj)
+                    );
                 }               
 
             }

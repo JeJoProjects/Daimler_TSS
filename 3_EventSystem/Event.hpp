@@ -3,6 +3,9 @@
 
 #include "Utility.hpp"
 
+namespace DTSS::Event
+{
+
 enum struct EventType
 {
     DEFAULT = 0,
@@ -23,4 +26,7 @@ private:
 
 };
 
+} // DTSS::Event
+
 #endif // EVENT_HPP
+

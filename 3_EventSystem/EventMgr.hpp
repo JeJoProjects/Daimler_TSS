@@ -3,6 +3,9 @@
 
 #include "Event.hpp"
 
+namespace DTSS::Event
+{
+
 class EventObserver;
 
 class EventMgr final // Subject
@@ -32,4 +35,7 @@ private:
 
 };
 
+} // DTSS::Event
+
 #endif // EVENT_MGR_HPP
+

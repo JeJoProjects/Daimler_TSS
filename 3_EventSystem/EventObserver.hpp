@@ -3,6 +3,8 @@
 
 #include "Event.hpp"
 
+namespace DTSS::Event
+{
 
 class EventObserver
 {
@@ -17,4 +19,7 @@ protected:
     virtual void de_registerSelf() = 0;
 };
 
+} // DTSS::Event
+
 #endif // EVENT_OBSERVER_HPP
+
