@@ -10,9 +10,11 @@
 #include <utility>
 #include <vector>
 #include <string>
+#include <unordered_map>
 #include <random>
 #include <ranges>
 #include <chrono>
+#include <any>
 
 #include <cassert>
 #include <cctype>
