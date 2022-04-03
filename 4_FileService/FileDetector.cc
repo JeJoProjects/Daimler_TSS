@@ -2,8 +2,6 @@
 #include "FileName.hpp"
 
 
-#include <iostream>
-
 void FileDetector::detectFile(std::chrono::duration<double> const& duration)
 {
 

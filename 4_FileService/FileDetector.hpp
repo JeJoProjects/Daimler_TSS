@@ -1,10 +1,7 @@
 #ifndef FILE_DETECTOR_HPP
 #define FILE_DETECTOR_HPP
 
-#include <vector>
-#include <filesystem>
-
-using PathType = std::filesystem::path;
+#include "Utility.hpp"
 
 class FileDetector // Subject
 {

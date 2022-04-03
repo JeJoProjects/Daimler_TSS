@@ -1,38 +1,5 @@
 #include "FileName.hpp"
-
-#include <iostream>
-
-
-    template<typename TimeType>
-    constexpr auto toSysTime(TimeType&& time) noexcept
-    {
-        if constexpr (std::is_same_v<std::chrono::system_clock::time_point, TimeType>)
-        {
-            return std::chrono::system_clock::to_time_t(
-                std::forward<TimeType>(time)
-            );
-        }
-        else if constexpr (std::is_same_v<std::filesystem::file_time_type, TimeType>)
-        {
-            return std::chrono::system_clock::to_time_t(
-                std::chrono::clock_cast<std::chrono::system_clock>(
-                    std::forward<TimeType>(time)
-                    )
-            );
-        }
-    }
-
-    template<typename Rep, typename Period = std::ratio<1>>
-    constexpr auto timeTo_h_min_sec_ms(
-        const std::chrono::duration<Rep, Period>& duration) noexcept
-    {
-        const auto hrs = duration_cast<std::chrono::hours>(duration);
-        const auto mins = duration_cast<std::chrono::minutes>(duration - hrs);
-        const auto secs = duration_cast<std::chrono::seconds>(duration - hrs - mins);
-        const auto ms = duration_cast<std::chrono::milliseconds>(duration - hrs - secs);
-
-        return std::make_tuple(hrs, mins, secs, ms);
-    }
+#include "Utility.hpp"
 
 
 FileName::FileName(std::filesystem::directory_entry dir, std::string startStr, std::string endStr)
@@ -43,6 +10,7 @@ FileName::FileName(std::filesystem::directory_entry dir, std::string startStr, s
 
 bool FileName::isCreatedWithIn(std::chrono::duration<double> const& duration) const noexcept
 {
+    using namespace DTSS::Utility;
     // current time.
     const auto now = toSysTime(std::chrono::system_clock::now());
     // std::cout << "Current time      : " << std::ctime(&now) << "\n";
