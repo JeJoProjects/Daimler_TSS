@@ -1,11 +1,23 @@
 project("Application")
 
+add_subdirectory(1_Utility)
+set(UTILITY_PRO  "Utility")
+
+
+add_subdirectory(2_EventSystem)
+set(EVENT_SYSTEM_PRO  "EventSystem")
+
+add_subdirectory(3_FileService)
+set(FILE_SERVICE_PRO  "FileService")
+
+
 file(GLOB SOURCES
     *.h
     *.hpp
     *.cc
     *.cpp
 )
+
 
 # make the single executable
 add_executable(${PROJECT_NAME} ${SOURCES})

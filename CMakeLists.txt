@@ -13,23 +13,13 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 option(BUILD_USING_PCH "Building using pre-compile support" ON)
 
 # Sub folder CMakeLists
-add_subdirectory(5_ThirdParty)
-set(LINDENB_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/5_ThirdParty)
+add_subdirectory(ThirdParty)
+set(LINDENB_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty)
+set(UTILITY_INCLUDE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/Application/1_Utility)
+set(EVENT_SYSTEM_INCLUDE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/Application/2_EventSystem)
+set(FILE_SERVICE_INCLUDE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/Application/3_FileService)
 
-add_subdirectory(2_Utility)
-set(UTILITY_PRO  "Utility")
-set(UTILITY_INCLUDE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/2_Utility)
-
-
-add_subdirectory(3_EventSystem)
-set(EVENT_SYSTEM_PRO  "EventSystem")
-set(EVENT_SYSTEM_INCLUDE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/3_EventSystem)
-
-add_subdirectory(4_FileService)
-set(FILE_SERVICE_PRO  "FileService")
-set(FILE_SERVICE_INCLUDE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/4_FileService)
-
-add_subdirectory(1_Application)
+add_subdirectory(Application)
 set(APPLICATION_PRO  "Application")
 
 # set start project
