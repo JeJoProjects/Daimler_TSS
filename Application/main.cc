@@ -5,7 +5,7 @@
 
 #include <thread> // sleep_for, sleep_until
 
-#define DEBUG false
+#define DEBUG true
 
 int main(int argc, char* argv[])
 {
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
     auto& eventMgr = Event::EventMgr::GetInstance();
     FileService::OutputMgr outMgr{};
 
-    if (DEBUG)
+    if (not DEBUG)
     {
         FileService::FileDetector fileDetector{
             cmdLine->getOptionValues("-Path"sv),

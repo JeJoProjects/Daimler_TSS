@@ -2,19 +2,22 @@
 
 namespace
 {
-    inline static constexpr std::array<std::pair<std::string_view, std::string_view>, 8> cmdOptions
+    inline static constexpr std::array<std::pair<std::string_view, std::string_view>, 9> cmdOptions
     {
         {
-            { "-Path"sv,           " Specify the directory(s) to be observed."sv },
+            { "-Path"sv,            " Specify the directory(s) to be observed."sv },
             { "-Ext"sv,             " Specify the file extension(s) to be checked."sv },
+            { "-Duration"sv,        " Specify how often the directories should be checked."sv },
+
             { "-NameStart"sv,       " Specify the desired file name start(s), for check."sv },
             { "-NameEnd"sv,         " Specify the desired file name end(s), for check."sv },
 
             { "-OutPath"sv,         " Specify the directory where the output archive should be stored. Default: Dir/user/"sv },
             { "-OutFileFormat"sv,   " Specify the output file archiver format. By default it is .tar format."sv },
 
-            { "-bOutFileOnly"sv,    " Specify whether the output archive should contain only new file. Default: 0 ... false"sv },
-            { "-bOutFileAndDirs"sv, " Specify whether the output archive should contain new file and whole directories and their contents. Default: 1 ... true"sv }
+            { "-bOutFileOnly"sv,    " Specify whether the output archive should contain only new file. Default: false"sv },
+            { "-bOutFileAndDirs"sv, " Specify whether the output archive should contain new file and whole directories and their contents. Default: true"sv }
+
         }
     };
 }
@@ -34,9 +37,9 @@ std::unique_ptr<DTSS::CmdLine>& DTSS::CmdLine::GetInstance()
     return instance;
 }
 
-DTSS::CmdLine::CmdLine(const int argc, CharPtr* argv) noexcept
+DTSS::CmdLine::CmdLine(const int argc, CharPtr* argv)
 {
-    if (argc == 1)
+    if (argc == 1) // ONLY Application.exe
     {
         printCmdOptions(); // nothing to parse!
     }
@@ -57,11 +60,6 @@ const std::vector<std::string>& DTSS::CmdLine::getOptionValues(
     
     static const std::vector<std::string> dummy;
     return dummy;
-}
-
-std::size_t DTSS::CmdLine::optionsRecived() const noexcept
-{
-    return mCmdOptionArgMap.size();
 }
 
 constexpr bool DTSS::CmdLine::isValidOption(std::string_view option) const noexcept
@@ -92,8 +90,8 @@ void DTSS::CmdLine::parseArguments(const int argc, CharPtr* const argv)
                 values.emplace_back(argv[i]);
             }
 
-            // add cmd option entry with values.
-            mCmdOptionArgMap.emplace(std::move(currArg), std::move(values));
+            // insert or assign(replace) cmd option entry with values.
+            mCmdOptionArgMap.insert_or_assign(std::move(currArg), std::move(values));
         }
         else
         {
@@ -118,7 +116,6 @@ void DTSS::CmdLine::parseArguments(const int argc, CharPtr* const argv)
         std::cout << "\n";
     }
 }
-
 
 void DTSS::CmdLine::printCmdOptions() const noexcept
 {
