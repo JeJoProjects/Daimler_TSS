@@ -17,8 +17,6 @@ public:
 private:
     std::vector<PathType> mFilePaths{};
     std::vector<PathType> mExtensions{};
-    //PathType newFile{};
-
 };
 
 

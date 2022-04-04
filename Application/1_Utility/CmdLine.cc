@@ -22,7 +22,10 @@ namespace
     };
 }
 
-void DTSS::CmdLine::CreateInstance(const int argc, CharPtr* argv)
+// name-space alias
+namespace DTSSU = DTSS::Utility;
+
+void DTSSU::CmdLine::CreateInstance(const int argc, CharPtr* argv)
 {
     if (!instance)
     {
@@ -31,25 +34,25 @@ void DTSS::CmdLine::CreateInstance(const int argc, CharPtr* argv)
     }
 }
 
-std::unique_ptr<DTSS::CmdLine>& DTSS::CmdLine::GetInstance()
+std::unique_ptr<DTSSU::CmdLine>& DTSSU::CmdLine::GetInstance()
 {
-    DTSS::Utility::Assert(instance != nullptr, "Singleton instance is nullptr!");
+    DTSSU::Assert(instance != nullptr, "Singleton instance is nullptr!");
     return instance;
 }
 
-DTSS::CmdLine::CmdLine(const int argc, CharPtr* argv)
+DTSSU::CmdLine::CmdLine(const int argc, CharPtr* argv)
 {
-    if (argc == 1) // ONLY Application.exe
+    if (argc == 0) // ONLY Application.exe
     {
         printCmdOptions(); // nothing to parse!
     }
-    else if(1 < argc && argv)
+    else if(0 < argc && argv)
     {
         parseArguments(argc, argv);
     }
 }
 
-const std::vector<std::string>& DTSS::CmdLine::getOptionValues(
+const std::vector<std::string>& DTSSU::CmdLine::getOptionValues(
     std::string_view option) const noexcept
 {
     if (const auto iter = mCmdOptionArgMap.find(option);
@@ -62,7 +65,7 @@ const std::vector<std::string>& DTSS::CmdLine::getOptionValues(
     return dummy;
 }
 
-constexpr bool DTSS::CmdLine::isValidOption(std::string_view option) const noexcept
+constexpr bool DTSSU::CmdLine::isValidOption(std::string_view option) const noexcept
 {
     return std::find_if(std::cbegin(cmdOptions), std::cend(cmdOptions),
         [&option](const auto& pair) constexpr noexcept {
@@ -70,7 +73,7 @@ constexpr bool DTSS::CmdLine::isValidOption(std::string_view option) const noexc
         }) != std::cend(cmdOptions);
 }
 
-void DTSS::CmdLine::parseArguments(const int argc, CharPtr* const argv)
+void DTSSU::CmdLine::parseArguments(const int argc, CharPtr* const argv)
 {
     for (int i = 1; i < argc; )
     {
@@ -117,7 +120,7 @@ void DTSS::CmdLine::parseArguments(const int argc, CharPtr* const argv)
     }
 }
 
-void DTSS::CmdLine::printCmdOptions() const noexcept
+void DTSSU::CmdLine::printCmdOptions() const noexcept
 {
     for (const auto& [option, description] : cmdOptions)
     {

@@ -1,6 +1,7 @@
 #include "EventMgr.hpp"
 #include "EventObserver.hpp"
 
+// name-space alias
 namespace DE = DTSS::Event;
 
 std::unique_ptr<DE::EventMgr>& DE::EventMgr::GetInstance()

@@ -11,8 +11,8 @@ int main(int argc, char* argv[])
 {
     using namespace DTSS;
 
-    CmdLine::CreateInstance( argc, argv );
-    const auto& cmdLine = CmdLine::GetInstance();
+    Utility::CmdLine::CreateInstance( argc, argv );
+    const auto& cmdLine = Utility::CmdLine::GetInstance();
 
     auto& eventMgr = Event::EventMgr::GetInstance();
     FileService::OutputMgr outMgr{};

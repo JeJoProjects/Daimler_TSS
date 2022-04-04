@@ -1,9 +1,12 @@
 #include "FileDetector.hpp"
 #include "EventMgr.hpp"
 #include "FileName.hpp"
+#include "CmdLine.hpp"
 
+// name-space aliases
 namespace DFS = DTSS::FileService;
 namespace DE = DTSS::Event;
+namespace DTSSU = DTSS::Utility;
 
 DFS::FileDetector::FileDetector(
     std::vector<std::string> const& paths, std::vector<std::string> const& exts)
@@ -23,20 +26,26 @@ void DFS::FileDetector::detectFile(std::chrono::duration<double> const& duration
     {
         for (auto dirEntry : std::filesystem::recursive_directory_iterator(currPath))
         {
+            std::cout << dirEntry << "\n";
             if (std::filesystem::is_regular_file(dirEntry)
                 && hasAllowedExtension(dirEntry.path().extension()))
             {
-                FileName fileObj{ std::move(dirEntry) };
+                File fileObj{ std::move(dirEntry)
+                    , DTSSU::CmdLine::GetInstance()->getOptionValues("-NameStart"sv)
+                    , DTSSU::CmdLine::GetInstance()->getOptionValues("-NameEnd"sv)
+                };
+
+                // @TODO: Test the files check!
                 std::cout << "File : " << fileObj.fileName().string() << "\n\n";
                 if (fileObj.isCreatedWithIn(duration) && fileObj.isGoodFile())
                 {
-#if 1
+#if 0
                     std::cout << fileObj.dir()
                         << " | File: " << fileObj.fileName().string()
                         << " | ext: " << fileObj.ext().string() << "\n";
 #endif
                     DE::EventMgr::GetInstance()->notify(
-                        DE::EventType::NEW_FILE, std::make_any<FileName>(fileObj)
+                        DE::EventType::NEW_FILE, std::make_any<File>(std::move(fileObj))
                     );
                 }               
 

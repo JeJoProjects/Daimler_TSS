@@ -2,6 +2,7 @@
 #include "EventMgr.hpp"
 #include "Utility.hpp"
 
+// name-space aliases
 namespace DFS = DTSS::FileService;
 namespace DE = DTSS::Event;
 
@@ -23,7 +24,7 @@ void print_space_info(std::fstream& outFile, auto const& dir, int width = 14)
 
 }
 
-auto creatFile(const DFS::FileName& file)
+auto creatFile(const DFS::File& file)
 {
     std::filesystem::path path{ "D:\\C++\\00_GitHub\\Daimler_TSS\\Build_and_Out" };
     const auto folderName = file.fileName().string() + DTSS::Utility::generateRandomName();
@@ -67,7 +68,7 @@ void DFS::OutputMgr::handleEvent(const DE::EventType type, const std::any& para)
         {
             try
             {
-                const auto& newFile = std::any_cast<FileName>(para);
+                const File& newFile = std::any_cast<File>(para);
                 creatFile(newFile);
 
             }

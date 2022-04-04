@@ -3,7 +3,7 @@
 
 #include "Utility.hpp"
 
-namespace DTSS
+namespace DTSS::Utility
 {
 // type alias
 using CharPtr = char*;
@@ -70,7 +70,7 @@ private:
     std::unordered_map<std::string_view, std::vector<std::string>> mCmdOptionArgMap
     {
         { "-Path"sv,            {{"D:\\C++\\00_GitHub\\Daimler_TSS\\Build_and_Out\\Test"s}} },
-        { "-Ext"sv,             {{}}                                                        },
+        { "-Ext"sv,             {}                                                        },
         { "-Duration"sv,        {{"10s"s}}                                                  },
 
         { "-NameStart"sv,       {{"core"s}}                                                 },
@@ -84,7 +84,7 @@ private:
     };
 };
 
-}// DTSS
+}// DTSS::Utility
 
 #endif // CMD_LINE_HPP
 

@@ -1,17 +1,19 @@
 #include "FileName.hpp"
 #include "Utility.hpp"
 
+// name-space alias
 namespace DFS = DTSS::FileService;
 
-DFS::FileName::FileName(std::filesystem::directory_entry dir
-    , std::string startStr, std::string endStr
+DFS::File::File(std::filesystem::directory_entry dir
+    , std::vector<std::string> startStrs
+    , std::vector<std::string> endStrs
 )
     : mPath{ std::move(dir) }
-    , mStartWith { std::move(startStr) }
-    , mEndsWith{ std::move(endStr) }
+    , mStartWith { std::move(startStrs) }
+    , mEndsWith{ std::move(endStrs) }
 {}
 
-bool DFS::FileName::isCreatedWithIn(std::chrono::duration<double> const& duration) const noexcept
+bool DFS::File::isCreatedWithIn(std::chrono::duration<double> const& duration) const noexcept
 {
     using namespace DTSS::Utility;
     // current time.
@@ -58,17 +60,19 @@ bool DFS::FileName::isCreatedWithIn(std::chrono::duration<double> const& duratio
     return hrs <= hrsCheck;
 }
 
-bool DFS::FileName::isGoodFile() const
+bool DFS::File::isGoodFile() const
 {
     if (!mPath.is_regular_file())
         return false;
 
     const std::string fileNameStr = this->fileName().string();
 
-    return fileNameStr.starts_with(mStartWith) || fileNameStr.ends_with(mEndsWith) || hasHexadecimal(fileNameStr);
+    return std::ranges::any_of(mStartWith, [&fileNameStr](const auto& startStr) noexcept { return fileNameStr.starts_with(startStr); })
+        || std::ranges::any_of(mEndsWith, [&fileNameStr](const auto& endStr) noexcept { return fileNameStr.ends_with(endStr); })
+        || hasHexadecimal(fileNameStr);
 }
 
-bool DFS::FileName::hasHexadecimal(const std::string& str) const
+bool DFS::File::hasHexadecimal(const std::string& str) const
 {
     static const auto is_hex_digit = [](unsigned char c) { return std::isxdigit(c); };
 
