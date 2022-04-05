@@ -1,6 +1,7 @@
 #include "OutputMgr.hpp"
 #include "EventMgr.hpp"
 #include "Utility.hpp"
+#include "CmdLine.hpp"
 
 // name-space aliases
 namespace DFS = DTSS::FileService;
@@ -24,11 +25,16 @@ void spaceInfo(std::fstream& outFile, auto const& dir, int width = 14)
 
 }
 
-auto creatFile(const DFS::File& file)
+auto creatAndWriteToFile(const DFS::File& file)
 {
-    std::filesystem::path path{ "D:\\C++\\00_GitHub\\Daimler_TSS\\Build_and_Out" };
+    std::filesystem::path path = []{
+        const auto& outPaths 
+            = DTSS::Utility::CmdLine::GetInstance()->getOptionValues<std::vector<std::string>>("-OutPath"sv);
+        return outPaths[0];
+    }();
+
     const auto folderName = file.fileName().string() + DTSS::Utility::generateRandomName();
-    path /= (folderName + ".txt"s); //put something into there
+    path /= (folderName + ".txt"s); // put something into there
     std::filesystem::create_directories(path.parent_path());
 
     std::fstream outFile{ path , std::ios::out };
@@ -68,7 +74,7 @@ void DFS::OutputMgr::handleEvent(const DE::EventType type, const std::any& para)
             try
             {
                 const File& newFile = std::any_cast<File>(para);
-                creatFile(newFile);
+                creatAndWriteToFile(newFile);
 
             }
             catch (const std::bad_any_cast& error)
