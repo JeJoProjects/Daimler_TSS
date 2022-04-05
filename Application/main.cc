@@ -18,13 +18,13 @@ int main(int argc, char* argv[])
     FileService::OutputMgr outMgr{};
 
     FileService::FileDetector fileDetector{
-        cmdLine->getOptionValues("-Path"sv),
-        cmdLine->getOptionValues("-Ext"sv),
+        cmdLine->getOptionValues<std::vector<std::string>>("-Path"sv),
+        cmdLine->getOptionValues<std::vector<std::string>>("-Ext"sv),
     };
 
     if (not DEBUG)
     {
-        const auto duration = 10min;
+        const auto duration = cmdLine->getOptionValues<std::chrono::duration<double>>("-Duration"sv);
         while (true)
         {
             fileDetector.detectFile(duration);

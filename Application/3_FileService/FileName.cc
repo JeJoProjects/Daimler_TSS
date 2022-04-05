@@ -37,11 +37,11 @@ bool DFS::File::isCreatedWithIn(std::chrono::duration<double> const& duration) c
     const auto [hrsCheck, minsCheck, secsCheck, msCheck] = timeTo_h_min_sec_ms(duration);
 
 
-    if (hrsCheck == 0h) [[likely]]
+    if (hrs == hrsCheck) [[likely]]
     {
-        if (minsCheck == 0min) [[likely]]
+        if (mins == minsCheck) [[likely]]
         {
-            if (secsCheck == 0s) [[unlikely]]
+            if (secs == secsCheck) [[unlikely]]
             {
                 // @TODO: Do we need ms check ??
                 std::cout << "Unknown scenario!\n";

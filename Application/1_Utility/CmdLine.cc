@@ -52,19 +52,6 @@ DTSSU::CmdLine::CmdLine(const int argc, CharPtr* argv)
     }
 }
 
-const std::vector<std::string>& DTSSU::CmdLine::getOptionValues(
-    std::string_view option) const noexcept
-{
-    if (const auto iter = mCmdOptionArgMap.find(option);
-        iter != std::cend(mCmdOptionArgMap))
-    {
-        return iter->second;
-    }
-    
-    static const std::vector<std::string> dummy;
-    return dummy;
-}
-
 constexpr bool DTSSU::CmdLine::isValidOption(std::string_view option) const noexcept
 {
     return std::find_if(std::cbegin(cmdOptions), std::cend(cmdOptions),

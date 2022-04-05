@@ -31,8 +31,8 @@ void DFS::FileDetector::detectFile(std::chrono::duration<double> const& duration
                 && hasAllowedExtension(dirEntry.path().extension()))
             {
                 File fileObj{ std::move(dirEntry)
-                    , DTSSU::CmdLine::GetInstance()->getOptionValues("-NameStart"sv)
-                    , DTSSU::CmdLine::GetInstance()->getOptionValues("-NameEnd"sv)
+                    , DTSSU::CmdLine::GetInstance()->getOptionValues<std::vector<std::string>>("-NameStart"sv)
+                    , DTSSU::CmdLine::GetInstance()->getOptionValues<std::vector<std::string>>("-NameEnd"sv)
                 };
 
                 // @TODO: Test the files check!

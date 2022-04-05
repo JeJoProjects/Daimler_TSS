@@ -40,8 +40,11 @@ public:
      * 
      * @param option whose values should be retrieved.
      * @return values to the given cmd line option.
+     * 
+     * @TODO: Implement that caller doesn't know all the options and makes no typos!!!
      */
-    const std::vector<std::string>& getOptionValues(std::string_view option) const noexcept;
+    template<typename ReType>
+    ReType getOptionValues(std::string_view&& option) const noexcept;
 
 
     /*!
@@ -87,6 +90,33 @@ private:
         { "-bOutFileAndDirs"sv, {{"true"s}} }
     };
 };
+
+template<typename ReType>
+ReType CmdLine::getOptionValues(std::string_view&& option) const noexcept
+{
+    const auto iter = mCmdOptionArgMap.find(option);
+    // @TODO: iter != std::cend(mCmdOptionArgMap)
+
+    if constexpr (std::is_same_v<ReType, bool>)
+    {
+        const std::vector<std::string>& flagVec = iter->second;
+        // @TODO: more error checks!
+        return !flagVec.empty() && flagVec[0] == "true"s;
+    } 
+    else if constexpr (std::is_same_v<ReType, std::chrono::duration<double>>)
+    {
+        // @TODO: more error checks and convert correct time unit(h, min, sec etc.)!
+        const std::vector<std::string>& timeStrs = iter->second;
+        const std::chrono::duration<double> duration 
+            = timeStrs.empty() ? 100s // default duration
+            : static_cast<std::chrono::duration<double>>(std::stoul(timeStrs[0]));
+        return duration;
+    }
+    else if constexpr (std::is_same_v<ReType, std::vector<std::string>>)
+    {
+        return iter->second;
+    }
+}
 
 }// DTSS::Utility
 
