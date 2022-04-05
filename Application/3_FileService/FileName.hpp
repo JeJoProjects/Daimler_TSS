@@ -15,6 +15,7 @@ class File
     using DirType = std::filesystem::directory_entry;
 
 public:
+    // constructor
     explicit File(std::filesystem::directory_entry dir
         , std::vector<std::string> start
         , std::vector<std::string> end);
@@ -25,19 +26,27 @@ public:
     File(File&&) = default;
     File& operator=(File&&) = default;
 
+    // destructor 
+    ~File() = default;
 
     /*!
-     * Function vto check wehther the given File is created within
+     * Function to check whether the given File is created within
      * the given time period.
      *
-     * @param time period/ interval - most likly in sec.
+     * @param time period/ interval - most likely in sec.
      * @return bool... true, if created with in the given time limit.
      */
     bool isCreatedWithIn(std::chrono::duration<double> const& sec) const noexcept;
 
-
+    /*!
+     * Function to check whether the given File has its name starts or ends with
+     * specified start or end. Or it contained at least one hexadecimal number. 
+     *
+     * @return bool... true, if file name satisfies the above conditions.
+     */
     bool isGoodFile() const;
 
+    // getters of the class
     const DirType& dir() const { return mPath; }
 
     PathType file() const { return mPath.path().filename(); }
@@ -47,6 +56,12 @@ public:
     PathType ext() const { return mPath.path().extension(); }
 
 private:
+    /*!
+     * Function to check whether the string contained at least one hexadecimal number
+     * which is separated by '.'.
+     *
+     * @return bool... true, if string contains hexadecimal.
+     */
     bool hasHexadecimal(const std::string& str) const;
 
 private:

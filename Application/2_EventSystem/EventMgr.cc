@@ -4,14 +4,14 @@
 // name-space alias
 namespace DE = DTSS::Event;
 
-std::unique_ptr<DE::EventMgr>& DE::EventMgr::GetInstance()
+DE::UniqueEventMgr& DE::EventMgr::GetInstance()
 {
     if (!instance)
     {
-        std::cout << "Creating EventMgr singleton instance.\n";
+        std::cout << "Creating \"EventMgr\" singleton instance.\n";
         instance.reset(new DE::EventMgr{});
     }
-    DTSS::Utility::Assert(instance != nullptr, "Singleton instance is nullptr!");
+    DTSS::Utility::Assert(instance != nullptr, "\"EventMgr\" singleton instance is nullptr!");
     return instance;
 }
 
@@ -22,8 +22,9 @@ void DE::EventMgr::attach(const EventType eType, EventObserver* addObsvr)
 
 void DE::EventMgr::detach(const EventType eType, EventObserver* removeObs)
 {
-    const auto erased = std::erase_if(mEventObserverMap,
-        [eType, removeObs](const auto& entry) noexcept {
+    const auto erased = std::erase_if(mEventObserverMap, 
+        [eType, removeObs](const auto& entry) noexcept 
+        {
             const auto& [type, obsvr] = entry;
             return type == eType && obsvr == removeObs;
         });
@@ -40,3 +41,4 @@ void DE::EventMgr::notify(const EventType eType, const std::any& para)
         obsvr->handleEvent(type, para);
     }
 }
+

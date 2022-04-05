@@ -26,7 +26,7 @@ void DFS::FileDetector::detectFile(std::chrono::duration<double> const& duration
     {
         for (auto dirEntry : std::filesystem::recursive_directory_iterator(currPath))
         {
-            std::cout << dirEntry << "\n";
+            // std::cout << dirEntry << "\n";
             if (std::filesystem::is_regular_file(dirEntry)
                 && hasAllowedExtension(dirEntry.path().extension()))
             {
@@ -44,8 +44,8 @@ void DFS::FileDetector::detectFile(std::chrono::duration<double> const& duration
                         << " | File: " << fileObj.fileName().string()
                         << " | ext: " << fileObj.ext().string() << "\n";
 #endif
-                    DE::EventMgr::GetInstance()->notify(
-                        DE::EventType::NEW_FILE, std::make_any<File>(std::move(fileObj))
+                    DE::EventMgr::GetInstance()->notify(DE::EventType::NEW_FILE
+                        , std::make_any<File>(std::move(fileObj))
                     );
                 }               
 
@@ -54,12 +54,12 @@ void DFS::FileDetector::detectFile(std::chrono::duration<double> const& duration
     }
 }
 
-bool DFS::FileDetector::hasAllowedExtension(const PathType& ext) const noexcept
+constexpr bool DFS::FileDetector::hasAllowedExtension(const PathType& ext) const noexcept
 {
-    if (mExtensions.empty()) // check all type of files
+    if (mExtensions.empty()) // if no specific ext is not provided.
         return true;
 
-    return std::ranges::any_of(mExtensions, [&ext](const auto& allowedExt) noexcept {
+    return std::ranges::any_of(mExtensions, [&ext](const auto& allowedExt) constexpr noexcept {
                 return ext == allowedExt;
-            });
+    });
 }

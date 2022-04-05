@@ -5,8 +5,12 @@
 
 namespace DTSS::Utility
 {
-// type alias
+// forward declaration(s)
+class CmdLine;
+
+// type alias(es)
 using CharPtr = char*;
+using UniqueCmdLine = std::unique_ptr<CmdLine>;
 
 /*!
  * Singleton class "CmdLine" parse and stores the command line arguments. It also provide
@@ -16,11 +20,11 @@ using CharPtr = char*;
 class CmdLine final
 {
 public:
-    // static functions to create the Singleton class instance.     
+    // static functions to create the Singleton class instance. 
     static void CreateInstance(const int argc, CharPtr* argv);
 
     // static functions to access the singleton instance.
-    static std::unique_ptr<CmdLine>& GetInstance();
+    static UniqueCmdLine& GetInstance();
 
     // disable copy-move by default!
     CmdLine(const CmdLine&) = delete;
@@ -66,7 +70,7 @@ private:
     void printCmdOptions() const noexcept;
 
 private:
-    inline static std::unique_ptr<CmdLine> instance{ nullptr };
+    inline static UniqueCmdLine instance{ nullptr };
     std::unordered_map<std::string_view, std::vector<std::string>> mCmdOptionArgMap
     {
         { "-Path"sv,            {{"D:\\C++\\00_GitHub\\Daimler_TSS\\Build_and_Out\\Test"s}} },

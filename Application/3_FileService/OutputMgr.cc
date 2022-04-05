@@ -6,7 +6,7 @@
 namespace DFS = DTSS::FileService;
 namespace DE = DTSS::Event;
 
-void print_space_info(std::fstream& outFile, auto const& dir, int width = 14)
+void spaceInfo(std::fstream& outFile, auto const& dir, int width = 14)
 {
     using namespace DTSS::Utility;
     std::string c = "|";
@@ -40,7 +40,7 @@ auto creatFile(const DFS::File& file)
         {
             outFile << dirEntry << std::endl;
         }
-        print_space_info(outFile, dirEntry);
+        spaceInfo(outFile, dirEntry);
     }
     outFile.close();
 }
@@ -59,7 +59,6 @@ DFS::OutputMgr::~OutputMgr()
 
 void DFS::OutputMgr::handleEvent(const DE::EventType type, const std::any& para)
 {
-    std::cout << "OutputMgr::update() --> \n";
     switch (type)
     {
     case DE::EventType::NEW_FILE:

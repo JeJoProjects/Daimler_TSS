@@ -29,14 +29,14 @@ void DTSSU::CmdLine::CreateInstance(const int argc, CharPtr* argv)
 {
     if (!instance)
     {
-        std::cout << "Creating CmdLine singleton instance.\n";
+        std::cout << "Creating \"CmdLine\" singleton instance.\n";
         instance.reset(new CmdLine{ argc, argv });
     }
 }
 
-std::unique_ptr<DTSSU::CmdLine>& DTSSU::CmdLine::GetInstance()
+DTSSU::UniqueCmdLine& DTSSU::CmdLine::GetInstance()
 {
-    DTSSU::Assert(instance != nullptr, "Singleton instance is nullptr!");
+    DTSSU::Assert(instance != nullptr, "\"CmdLine\" singleton instance is nullptr!");
     return instance;
 }
 

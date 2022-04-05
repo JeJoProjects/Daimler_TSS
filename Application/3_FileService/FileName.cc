@@ -80,7 +80,7 @@ bool DFS::File::hasHexadecimal(const std::string& str) const
     std::string possibleNum{};
     while (std::getline(iss, possibleNum, '.'))
     {
-        std::cout << "possibleNum : " << possibleNum << '\n';
+        // std::cout << "possibleNum : " << possibleNum << '\n';
         if (!possibleNum.empty()
             && std::ranges::all_of(possibleNum, is_hex_digit))
             return true;
