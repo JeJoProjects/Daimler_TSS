@@ -16,6 +16,7 @@ void spaceInfo(std::fstream& outFile, auto const& dir, int width = 14)
         outFile << c << std::setw(width) << s << ' ';
     outFile << '\n';
     std::error_code ec;
+    // @TODO: check spaces are correct
     const std::filesystem::space_info si = std::filesystem::space(dir, ec);
     outFile
         << c << std::setw(width) << Convert<std::intmax_t>::B2Mb(si.capacity) << ' '
@@ -46,6 +47,7 @@ auto creatAndWriteToFile(const DFS::File& file)
         {
             outFile << dirEntry << std::endl;
         }
+        // @TODO: check the two booleans
         spaceInfo(outFile, dirEntry);
     }
     outFile.close();
@@ -74,6 +76,7 @@ void DFS::OutputMgr::handleEvent(const DE::EventType type, const std::any& para)
             try
             {
                 const File& newFile = std::any_cast<File>(para);
+                // @TDOD: FileArchiver class would have been nice
                 creatAndWriteToFile(newFile);
 
             }

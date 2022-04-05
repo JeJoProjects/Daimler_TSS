@@ -3,6 +3,10 @@
 Simple cmd line module for the collecting directory information, when a new file
 has been created.
 
+## Required
+* C++ Compiler supports C++20 or latter.
+* CMake 3.2
+
 ## Features
 
 * New file detection in every given time limit (configurable via command-line).
@@ -18,6 +22,10 @@ has been created.
 
 ## TODO
 
-* Handling different file output formats, including `.tar`.
+* Improvements in general command-line inputs parsing.
+* Logging system for better diagnostics.
+* Handling different file output formats, including `.tar`, and general improvements for the output file creation and handling (i.e FileArchiver class).
 * Unit Tests and Module Tests.
-* Documentation.
+* Queue system in handling events in EventMgr!
+* Testing in other environments. 
+* ...
