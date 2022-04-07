@@ -76,14 +76,14 @@ private:
     inline static UniqueCmdLine instance{ nullptr };
     std::unordered_map<std::string_view, std::vector<std::string>> mCmdOptionArgMap
     {
-        { "-Path"sv,            {{"D:\\C++\\00_GitHub\\Daimler_TSS\\Build_and_Out\\Test"s}} },
+        { "-Path"sv,            {{"D:\\C++\\00_GitHub\\Daimler_TSS\\Build\\Test"s}} },
         { "-Ext"sv,             {}                                                        },
         { "-Duration"sv,        {{"10s"s}}                                                  },
 
         { "-NameStart"sv,       {{"core"s}}                                                 },
         { "-NameEnd"sv,         {{"lz4"s}}                                                  },
 
-        { "-OutPath"sv,         {{"D:\\C++\\00_GitHub\\Daimler_TSS\\Build_and_Out"s}}       },
+        { "-OutPath"sv,         {{"D:\\C++\\00_GitHub\\Daimler_TSS\\Build"s}}       },
         { "-OutFileFormat"sv,   {{".tar"s}}                                                 },
 
         { "-bOutFileOnly"sv,    {{"false"s}}  },
