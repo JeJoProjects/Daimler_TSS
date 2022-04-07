@@ -38,4 +38,4 @@ build/
 Build/
 Build_and_Out/
 Test/
-ThirdParty/
+ThirdParty/googletest
