@@ -10,7 +10,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Enbale/ Disable PCH compiling
-option(BUILD_USING_PCH "Building using pre-compile support" ON)
+option(UTILITY_BUILD_USING_PCH "Utility: Building using pre-compile support" ON)
+option(EVENT_SYSTEM_BUILD_USING_PCH "EventSystem: Building using pre-compile support" OFF)
+option(FILE_SERVICE_BUILD_USING_PCH "FileService: Building using pre-compile support" OFF)
 
 # Sub folder CMakeLists
 add_subdirectory(ThirdParty)

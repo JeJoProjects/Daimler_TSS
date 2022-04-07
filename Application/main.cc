@@ -3,8 +3,6 @@
 #include "FileDetector.hpp"
 #include "OutputMgr.hpp"
 
-#include <thread> // sleep_for, sleep_until
-
 #define DEBUG false
 
 int main(int argc, char* argv[])

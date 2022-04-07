@@ -1,6 +1,6 @@
 #include "FileDetector.hpp"
 #include "EventMgr.hpp"
-#include "FileName.hpp"
+#include "File.hpp"
 #include "CmdLine.hpp"
 
 // name-space aliases

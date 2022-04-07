@@ -1,7 +1,8 @@
 #include "OutputMgr.hpp"
-#include "EventMgr.hpp"
 #include "Utility.hpp"
 #include "CmdLine.hpp"
+#include "EventMgr.hpp"
+#include "File.hpp"
 
 // name-space aliases
 namespace DFS = DTSS::FileService;
