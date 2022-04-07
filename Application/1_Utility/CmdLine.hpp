@@ -53,7 +53,7 @@ public:
      * @param option which has to be validated.
      * @return bool... true, if valid option.
      */
-    constexpr bool isValidOption(std::string_view option) const noexcept;
+    bool isValidOption(std::string_view option) const noexcept;
 
 private:
     // constructor is for private use

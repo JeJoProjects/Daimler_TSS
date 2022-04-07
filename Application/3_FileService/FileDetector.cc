@@ -36,7 +36,7 @@ void DFS::FileDetector::detectFile(std::chrono::duration<double> const& duration
                 };
 
                 // @TODO: Test the files check!
-                std::cout << "File : " << fileObj.fileName().string() << "\n\n";
+                std::cout << "File : " << fileObj.file().string() << "\n\n";
                 if (fileObj.isCreatedWithIn(duration) && fileObj.isGoodFile())
                 {
 #if 0
@@ -54,12 +54,12 @@ void DFS::FileDetector::detectFile(std::chrono::duration<double> const& duration
     }
 }
 
-constexpr bool DFS::FileDetector::hasAllowedExtension(const PathType& ext) const noexcept
+bool DFS::FileDetector::hasAllowedExtension(const PathType& ext) const noexcept
 {
     if (mExtensions.empty()) // if no specific ext is not provided.
         return true;
 
-    return std::ranges::any_of(mExtensions, [&ext](const auto& allowedExt) constexpr noexcept {
+    return std::ranges::any_of(mExtensions, [&ext](const auto& allowedExt) noexcept {
                 return ext == allowedExt;
     });
 }

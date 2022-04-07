@@ -42,20 +42,20 @@ DTSSU::UniqueCmdLine& DTSSU::CmdLine::GetInstance()
 
 DTSSU::CmdLine::CmdLine(const int argc, CharPtr* argv)
 {
-    if (argc == 0) // ONLY Application.exe
+    if (argc == 1) // ONLY Application.exe
     {
         printCmdOptions(); // nothing to parse!
     }
-    else if(0 < argc && argv)
+    else if(1 < argc && argv)
     {
         parseArguments(argc, argv);
     }
 }
 
-constexpr bool DTSSU::CmdLine::isValidOption(std::string_view option) const noexcept
+bool DTSSU::CmdLine::isValidOption(std::string_view option) const noexcept
 {
     return std::find_if(std::cbegin(cmdOptions), std::cend(cmdOptions),
-        [&option](const auto& pair) constexpr noexcept {
+        [&option](const auto& pair) noexcept {
             return pair.first == option;
         }) != std::cend(cmdOptions);
 }

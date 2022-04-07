@@ -40,7 +40,7 @@ public:
      * @param Extension of the current file in check.
      * @return bool... true, if the file has desired extension.
      */
-    constexpr bool hasAllowedExtension(const PathType& ext) const noexcept;
+    bool hasAllowedExtension(const PathType& ext) const noexcept;
 
 private:
     std::vector<PathType> mFilePaths{};
