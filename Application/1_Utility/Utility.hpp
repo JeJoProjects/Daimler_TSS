@@ -19,6 +19,8 @@
 #include <fstream>
 #include <iomanip>
 #include <thread>
+#include <ranges>
+#include <concepts>
 
 #include <cassert>
 #include <cctype>
@@ -65,11 +67,11 @@ namespace DTSS::Utility
         }
         else if constexpr (std::is_same_v<std::filesystem::file_time_type, TimeType>)
         {
-            return std::chrono::system_clock::to_time_t(
+            return time; /*std::chrono::system_clock::to_time_t(
                 std::chrono::clock_cast<std::chrono::system_clock>(
                     std::forward<TimeType>(time)
                     )
-            );
+            );*/
         }
     }
 

@@ -13,6 +13,7 @@ file(GLOB HEADERS_SOURCES
     *.cpp
 )
 
+
 # add to lib
 add_library(${PROJECT_NAME} STATIC ${HEADERS_SOURCES})
 

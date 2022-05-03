@@ -23,7 +23,7 @@ bool DFS::File::isCreatedWithIn(std::chrono::duration<double> const& duration) c
     // file creation time.
     const auto fileTime = toSysTime(std::filesystem::last_write_time(mPath));
     // std::cout << "File creation time: " << std::ctime(&fileTime) << "\n";
-
+#if 0
     // how long has been the file is crested after.
     const auto [hrs, mins, secs, ms] = timeTo_h_min_sec_ms(
         static_cast<std::chrono::duration<double>>(now - fileTime)
@@ -56,8 +56,8 @@ bool DFS::File::isCreatedWithIn(std::chrono::duration<double> const& duration) c
             return mins <= minsCheck;
         }
     }
-
-    return hrs <= hrsCheck;
+#endif
+    return true; //hrs <= hrsCheck;
 }
 
 bool DFS::File::isGoodFile() const

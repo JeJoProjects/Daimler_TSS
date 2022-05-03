@@ -12,6 +12,9 @@ file(GLOB HEADERS_SOURCES
     *.cpp
 )
 
+# lib HEADERs
+include_directories(${PROJECT_NAME} PRIVATE ${UTILITY_INCLUDE_DIR})
+
 # add to lib
 add_library(${PROJECT_NAME} STATIC ${HEADERS_SOURCES})
 

@@ -36,6 +36,5 @@ Builds/
 builds/
 build/
 Build/
-Build_and_Out/
 Test/
 ThirdParty/googletest
